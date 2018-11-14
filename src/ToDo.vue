@@ -2,12 +2,13 @@
   <div id="app">
     <div class="ToDo">
       <h1 class="ToDo-Header">To Do List</h1>
-        <table class="ToDo-Table">
+        <b-table striped bordered hover :items="list">
+        
           <ToDoItem v-for="todo in list"
                     :todo="todo"
                     @delete="onDeleteItem"
                     :key="todo.id" />
-        </table>
+        </b-table>
       
     </div>
   </div>
@@ -20,6 +21,24 @@ export default {
   name: 'app',
   components: {
     ToDoItem
+  },
+  data() {
+    return {
+      list: [
+        {
+          id: 1,
+          text: 'Read Vue.js documentation',
+          completed: false
+        },
+        {
+          id: 2,
+          text: 'Make a ToDo App',
+          completed: false
+        }
+      ],
+      todo: ''
+
+    }
   }
 }
 </script>
@@ -32,5 +51,11 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.ToDo-Header {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  text-align: center;
+  color: aquamarine
+
 }
 </style>

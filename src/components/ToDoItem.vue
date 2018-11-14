@@ -4,6 +4,7 @@
             <td>{{ todo.text }} </td>
             <td> Edit </td>
             <td> Delete </td>
+        </tr>
     </div>
 </template>
 
