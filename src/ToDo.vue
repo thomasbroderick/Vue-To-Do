@@ -11,6 +11,8 @@
         </b-table>
       
     </div>
+    <input type="text" v-model="todo" placeholder="Enter new item" v-on:keyup.enter="createNewToDo()"/>
+    <button class="ToDo-Add" @click="createNewToDo()">+</button>
   </div>
 </template>
 
@@ -38,6 +40,14 @@ export default {
       ],
       todo: ''
 
+    }
+  },
+
+  methods: {
+    createNewToDo() {
+      var newID = this.list.length + 1;
+      this.list.push({ id: newID, text: this.todo, completed: false});
+      this.todo = '';
     }
   }
 }
