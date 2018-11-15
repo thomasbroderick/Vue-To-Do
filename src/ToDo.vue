@@ -2,12 +2,10 @@
   <div id="app">
     <div class="ToDo">
       <h1 class="ToDo-Header">To Do List</h1>
-        <b-table striped bordered hover :items="list">
-        
-          <ToDoItem v-for="todo in list"
-                    :todo="todo"
-                    @delete="onDeleteItem"
-                    :key="todo.id" />
+        <b-table striped bordered hover :items="list" :fields="fields">
+          <template slot="delete" slot-scope="cell">
+            <b-btn outline-danger size="sm" @click.stop="deleteToDo(todo)">x</b-btn>
+          </template>
         </b-table>
       
     </div>
@@ -26,6 +24,9 @@ export default {
   },
   data() {
     return {
+      fields: [
+        'text', 'completed', 'delete'
+      ],
       list: [
         {
           id: 1,
@@ -48,6 +49,11 @@ export default {
       var newID = this.list.length + 1;
       this.list.push({ id: newID, text: this.todo, completed: false});
       this.todo = '';
+    },
+
+    deleteToDo(todo) {
+      var position = todo.id - 1;
+      this.list.splice(position, 1);
     }
   }
 }
