@@ -4,22 +4,22 @@
       <h1 class="ToDo-Header">To Do List</h1>
         <b-table striped bordered hover :items="list" :fields="fields">
           <template slot="actions" slot-scope="row">
-            <font-awesome-icon v-b-modal.modal1 icon="edit" @click.stop="displayToDo(todo)" />
-
-              
-
-            <b-btn outline-danger size="sm" @click.stop="deleteToDo(todo)">x</b-btn>
+            
+            <b-btn class="m-2" v-b-modal.modal1 size="sm" @click.stop="selected=row.item">Edit</b-btn>            
+            <b-btn outline-danger size="sm" @click.stop="deleteToDo(row.item)">Delete</b-btn>
+            
           </template>
-        </b-table>
-
-        <b-modal v-if="selected" id="modal1" title="Edit-Modal">
-          <form input="text" class="editModal">{{ selected.text}}</form>
-        </b-modal>
-      
+        </b-table> 
+    </div>
+    <div>
+      <b-modal id="modal1" title="Bootstrap-Vue">
+        <p class="my-4">{{selected.text}}</p>
+      </b-modal>
     </div>
     <input type="text" v-model="todo" placeholder="Enter new item" v-on:keyup.enter="createNewToDo()"/>
     <button class="ToDo-Add" @click="createNewToDo()">+</button>
   </div>
+  
 </template>
 
 <script>
@@ -59,7 +59,7 @@ export default {
     },
 
     deleteToDo(todo) {
-      var position = todo.id + 1;
+      const position = this.list.indexOf(todo);
       this.list.splice(position, 1);
     },
 
@@ -85,5 +85,9 @@ export default {
   text-align: center;
   color: aquamarine
 
+}
+
+.b-btn {
+  margin: 13px;
 }
 </style>
