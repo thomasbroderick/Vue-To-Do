@@ -3,10 +3,18 @@
     <div class="ToDo">
       <h1 class="ToDo-Header">To Do List</h1>
         <b-table striped bordered hover :items="list" :fields="fields">
-          <template slot="delete" slot-scope="cell">
+          <template slot="actions" slot-scope="row">
+            <font-awesome-icon v-b-modal.modal1 icon="edit" @click.stop="displayToDo(todo)" />
+
+              
+
             <b-btn outline-danger size="sm" @click.stop="deleteToDo(todo)">x</b-btn>
           </template>
         </b-table>
+
+        <b-modal v-if="selected" id="modal1" title="Edit-Modal">
+          <form input="text" class="editModal">{{ selected.text}}</form>
+        </b-modal>
       
     </div>
     <input type="text" v-model="todo" placeholder="Enter new item" v-on:keyup.enter="createNewToDo()"/>
@@ -15,17 +23,16 @@
 </template>
 
 <script>
-import ToDoItem from './components/ToDoItem.vue'
 
 export default {
   name: 'app',
   components: {
-    ToDoItem
+    
   },
   data() {
     return {
       fields: [
-        'text', 'completed', 'delete'
+        'text', 'completed', 'actions'
       ],
       list: [
         {
@@ -39,8 +46,8 @@ export default {
           completed: false
         }
       ],
-      todo: ''
-
+      todo: '',
+      selected: ''
     }
   },
 
@@ -52,9 +59,14 @@ export default {
     },
 
     deleteToDo(todo) {
-      var position = todo.id - 1;
+      var position = todo.id + 1;
       this.list.splice(position, 1);
-    }
+    },
+
+    displayToDo(todo) {
+    console.log(this.selected);
+    this.selected = todo;
+  }
   }
 }
 </script>
