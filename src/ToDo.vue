@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div class="ToDo">
-      <h1 class="ToDo-Header">To Do List</h1>
-        <b-table striped bordered hover :items="list" :fields="fields">
+      <h1 class="ToDo-Header">Braxton Interview To Do List</h1>
+        <b-table striped bordered hover :items="notCompleted" :fields="fields">
           <template slot="actions" slot-scope="row">
             
             <b-btn class="m-2" v-b-modal.modal1 size="sm" @click.stop="selected=row.item">Edit</b-btn>            
@@ -12,8 +12,12 @@
         </b-table> 
     </div>
     <div>
-      <b-modal id="modal1" title="Bootstrap-Vue">
-        <p class="my-4">{{selected.text}}</p>
+      <b-modal id="modal1" title="Edit Item">
+        <input v-model="selected.text">
+        <div>
+        <input type="checkbox" id="checkbox" class="m-2" v-model="selected.completed">
+          <label for="checkbox">Completed</label>
+        </div>
       </b-modal>
     </div>
     <input type="text" v-model="todo" placeholder="Enter new item" v-on:keyup.enter="createNewToDo()"/>
@@ -44,11 +48,24 @@ export default {
           id: 2,
           text: 'Make a ToDo App',
           completed: false
+        },
+        {
+          id: 3,
+          text: 'Crush Interview',
+          completed: false
         }
       ],
       todo: '',
       selected: ''
     }
+  },
+
+  computed: {
+    notCompleted: function () {
+    return this.list.filter(function (todo) {
+      return todo.completed === false
+    })
+  }
   },
 
   methods: {
@@ -64,7 +81,6 @@ export default {
     },
 
     displayToDo(todo) {
-    console.log(this.selected);
     this.selected = todo;
   }
   }
@@ -78,13 +94,13 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 .ToDo-Header {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   text-align: center;
-  color: aquamarine
-
+  color: goldenrod;
+  background-color: black;
+  padding-top: 50px;
 }
 
 .b-btn {
